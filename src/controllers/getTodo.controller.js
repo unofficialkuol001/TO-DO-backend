@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Todo } from './../model/todo.js'
+import Todo from './../model/todo.js'
 
 
 const getTodo = async (req, res) => {
