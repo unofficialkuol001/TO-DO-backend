@@ -1,4 +1,4 @@
-import { User } from './../model/user.js'
+import User  from './../model/user.js'
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
