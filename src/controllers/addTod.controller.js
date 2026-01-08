@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { User } from './../model/user.js'
-import {Todo} from './../model/todo.js'
+import User from './../model/user.js'
+import Todo from './../model/todo.js'
 
 const addTodo = async (req, res) => {
     try {
