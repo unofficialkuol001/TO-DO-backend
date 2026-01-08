@@ -1,6 +1,8 @@
 import express from 'express'
 import connectDB from './src/config/database.js'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
+import userRoutes from './src/routes/user.routes.js'
+import todoRoutes from './src/routes/todo.routes.js'
 
 const app = express();
 
@@ -10,6 +12,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = process.env.PORT
+
+app.use('todo/app', todoRoutes);
+app.use('/authentication', userRoutes)
 
 const startServer = async () => {
     try {
