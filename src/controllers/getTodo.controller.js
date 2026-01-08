@@ -4,7 +4,10 @@ import { Todo } from './../model/todo.js'
 
 const getTodo = async (req, res) => {
     try {
+        //get todos from database
         const todo = Todo.find();
+
+        //send data to the frontend
         res.status(200).json({
             message: 'successful',
             todo
