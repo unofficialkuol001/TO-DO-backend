@@ -5,6 +5,6 @@ import getTodo from '../controllers/getTodo.controller.js'
 const router = express.Router();
 
 router.post('/addTask', addTodo);
-router.get('/display/task', getTodo);
+router.get('/display', getTodo);
 
 export default router
