@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
-import { User } from '../model/todo.js'
+import User from '../model/todo.js'
 import jwt from 'jsonwebtoken'
 import { config } from 'dotenv'
 
