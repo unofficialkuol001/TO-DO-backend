@@ -1,44 +1,41 @@
-import User  from './../model/user.js'
-import mongoose from 'mongoose'
+import User from '../model/user.js'
 import bcrypt from 'bcrypt'
 
-
 const userController = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        const match = await User.findOne({ email });
+  try {
+    const { name, email, password } = req.body;
 
-        //checking for existing user
-        if (match) {
-            return res.status(409).json({
-                message:'user already exist'
-            })
-        }
-
-        //bcrypt password
-        const salt = bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password, salt);
-
-        //create a new user
-        const newUser = new User({
-            name: name,
-            email: email,
-            password: hashPassword
-        })
-
-        //save user to the database
-        await newUser.save();
-
-        //server response
-        res.status(200).json({
-            message:'user added successfully'
-        })
-    } catch (error) {
-        console.log('error', error);
-        res.status(500).json({
-            message:'server error'
-        })
+    // check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        message: 'User already exists'
+      });
     }
-}
+
+    // hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+
+    // create user
+    const newUser = new User({
+      name,
+      email,
+      password: hashPassword
+    });
+
+    await newUser.save();
+
+    return res.status(201).json({
+      message: 'User added successfully'
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Server error'
+    });
+  }
+};
 
 export default userController;
