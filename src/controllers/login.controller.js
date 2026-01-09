@@ -1,6 +1,5 @@
-import mongoose from 'mongoose'
+import User from '../model/user.js'
 import bcrypt from 'bcrypt'
-import User from '../model/todo.js'
 import jwt from 'jsonwebtoken'
 import { config } from 'dotenv'
 
@@ -35,6 +34,7 @@ const login = async (req, res) => {
 
         //success message
         res.status(200).json({
+            token,
             message:'login successful'
         })
     } catch (error) {
