@@ -15,7 +15,7 @@ app.use(cors())
 
 const PORT = process.env.PORT
 
-app.use('todo/app', todoRoutes);
+app.use('/todo/app', todoRoutes);
 app.use('/authentication', userRoutes)
 
 const startServer = async () => {
