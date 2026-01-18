@@ -4,6 +4,9 @@ import connectDB from './src/config/database.js'
 import { config } from 'dotenv'
 import userRoutes from './src/routes/user.routes.js'
 import todoRoutes from './src/routes/todo.routes.js'
+import mongoose from 'mongoose'
+import addRoutes from './src/routes/addTodo.routes.js';
+
 
 const app = express();
 
@@ -15,8 +18,10 @@ app.use(cors())
 
 const PORT = process.env.PORT
 
-app.use('/todo/app', todoRoutes);
+
+app.use('/todo', todoRoutes);
 app.use('/authentication', userRoutes)
+
 
 const startServer = async () => {
     try {
