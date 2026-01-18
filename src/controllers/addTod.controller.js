@@ -1,35 +1,39 @@
-import mongoose from "mongoose";
-import User from '../model/user.js'
-import Todo from '../model/todo.js'
-
 const addTodo = async (req, res) => {
-    try {
-        const { title, description } = req.body;
-        const existTitle = await Todo.findOne({ title });
-        
-        if (existTitle) {
-            return res.status(409).json({
-                message:'Task already exist'
-            })
-        }
+  try {
+    const { title, description } = req.body;
+    const userId = req.user.id;
 
-        const newTask = new Todo({
-            title: title,
-            description: description
-        })
+    // check duplicate title PER USER
+    const existTitle = await Todo.findOne({
+      title,
+      user: userId
+    });
 
-        await newTask.save();
-        
-        res.status(201).json({
-            message:'task saved successfully'
-        })
-        
-    } catch (error) {
-        console.log('error', error);
-        res.status(500).json({
-            message:'server error'
-        })
+    if (existTitle) {
+      return res.status(409).json({
+        message: 'Task already exists'
+      });
     }
-}
+
+    const newTask = new Todo({
+      title,
+      description,
+      user: userId
+    });
+
+    await newTask.save();
+
+    res.status(201).json({
+      message: 'Task saved successfully',
+      todo: newTask
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Server error'
+    });
+  }
+};
 
 export default addTodo;
