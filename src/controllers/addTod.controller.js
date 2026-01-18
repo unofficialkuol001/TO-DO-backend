@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-import User from './../model/user.js'
-import Todo from './../model/todo.js'
+import User from '../model/user.js'
+import Todo from '../model/todo.js'
 
 const addTodo = async (req, res) => {
     try {
         const { title, description } = req.body;
         const existTitle = await Todo.findOne({ title });
+        
         if (existTitle) {
             return res.status(409).json({
                 message:'Task already exist'
@@ -18,6 +19,11 @@ const addTodo = async (req, res) => {
         })
 
         await newTask.save();
+        
+        res.status(201).json({
+            message:'task saved successfully'
+        })
+        
     } catch (error) {
         console.log('error', error);
         res.status(500).json({
